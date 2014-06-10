@@ -1,11 +1,14 @@
 package com.airhacks.workshops.business.registrations.entity;
 
+import java.util.function.BiFunction;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -18,7 +21,12 @@ public class Registration {
 
     @Id
     @GeneratedValue
+    @XmlTransient
     private long id;
+
+    @XmlTransient
+    @Transient
+    private BiFunction<Boolean, Integer, Integer> taxCalculator;
 
     private int numberOfDays;
     private int numberOfAttendees;
@@ -34,30 +42,19 @@ public class Registration {
         this.vatIdAvailable = vatIdAvailable;
     }
 
-    public Registration(long id, int numberOfDays, int numberOfAttendees, boolean vatIdAvailable, int totalPrice) {
-        this.id = id;
-        this.numberOfDays = numberOfDays;
-        this.numberOfAttendees = numberOfAttendees;
-        this.vatIdAvailable = vatIdAvailable;
-        this.totalPrice = totalPrice;
-    }
-
     public Registration() {
     }
 
     public int getNetPrice() {
-        return numberOfAttendees * numberOfAttendees * DAILY_PRICE;
+        return numberOfAttendees * numberOfDays * DAILY_PRICE;
+    }
+
+    public void setCalculator(BiFunction<Boolean, Integer, Integer> taxCalculator) {
+        this.taxCalculator = taxCalculator;
     }
 
     public int getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(int totalPrice) {
-        if (totalPrice < 0) {
-            throw new IllegalArgumentException("Price cannot be less than zero");
-        }
-        this.totalPrice = totalPrice;
+        return taxCalculator.apply(this.vatIdAvailable, getNetPrice());
     }
 
     public boolean isVatIdAvailable() {

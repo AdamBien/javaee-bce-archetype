@@ -32,14 +32,6 @@ public class RegistrationsTest {
         this.cut.register(registration);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void negativeVatFails() {
-        when(this.cut.priceCalculator.calculateTotal(Matchers.anyBoolean(), Matchers.anyInt())).thenReturn(-1);
-        Registration registration = new Registration(true, 1, 1);
-        merge(registration);
-        this.cut.register(registration);
-    }
-
     void merge(Registration registration) {
         when(this.cut.em.merge(registration)).thenReturn(registration);
     }

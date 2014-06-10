@@ -5,6 +5,8 @@ import com.airhacks.workshops.business.registrations.entity.Registration;
 import java.net.URI;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -28,10 +30,13 @@ public class RegistrationsResource {
     VatCalculator calculator;
 
     @POST
-    public Response register(Registration registration, @Context UriInfo info) {
-        Registration confirmation = registrations.register(registration);
-        long id = confirmation.getId();
-        URI uri = info.getAbsolutePathBuilder().path("/" + String.valueOf(id)).build();
+    public Response register(Registration request, @Context UriInfo info) {
+        Registration registration = registrations.register(request);
+        long id = registration.getId();
+        URI uri = info.getAbsolutePathBuilder().path("/" + id).build();
+        JsonObject confirmation = Json.createObjectBuilder().
+                add("price", registration.getTotalPrice()).
+                add("confirmation-id", registration.getId()).build();
         return Response.created(uri).entity(confirmation).build();
     }
 

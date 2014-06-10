@@ -22,9 +22,7 @@ public class Registrations {
 
     public Registration register(Registration request) {
         Registration registration = em.merge(request);
-        int netPrice = registration.getNetPrice();
-        int totalPrice = priceCalculator.calculateTotal(request.isVatIdAvailable(), netPrice);
-        registration.setTotalPrice(totalPrice);
+        registration.setCalculator(priceCalculator::calculateTotal);
         return registration;
     }
 
