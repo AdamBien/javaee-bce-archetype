@@ -2,6 +2,7 @@ package com.airhacks.workshops.business.registrations.boundary;
 
 import com.airhacks.workshops.business.registrations.control.VatCalculator;
 import com.airhacks.workshops.business.registrations.entity.Registration;
+import com.airhacks.workshops.business.tracing.boundary.Tracer;
 import javax.persistence.EntityManager;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +23,7 @@ public class RegistrationsTest {
         this.cut = new Registrations();
         this.cut.priceCalculator = mock(VatCalculator.class);
         this.cut.em = mock(EntityManager.class);
+        this.cut.tracer = mock(Tracer.class);
     }
 
     @Test
