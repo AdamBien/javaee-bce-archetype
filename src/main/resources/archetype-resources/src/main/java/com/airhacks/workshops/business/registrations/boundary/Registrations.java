@@ -2,7 +2,7 @@ package com.airhacks.workshops.business.registrations.boundary;
 
 import com.airhacks.workshops.business.registrations.control.VatCalculator;
 import com.airhacks.workshops.business.registrations.entity.Registration;
-import com.airhacks.workshops.business.tracing.boundary.Tracer;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -22,14 +22,14 @@ public class Registrations {
     VatCalculator priceCalculator;
 
     @Inject
-    Tracer tracer;
+    Logger tracer;
 
     public Registration register(Registration request) {
-        tracer.trace("registration arrived: " + request);
+        tracer.info("registration arrived: " + request);
         Registration registration = em.merge(request);
-        tracer.trace("registration stored: " + request);
+        tracer.info("registration stored: " + request);
         registration.setCalculator(priceCalculator::calculateTotal);
-        tracer.trace("price computed: " + registration.getTotalPrice());
+        tracer.info("price computed: " + registration.getTotalPrice());
         return registration;
     }
 
