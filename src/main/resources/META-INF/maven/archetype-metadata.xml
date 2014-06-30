@@ -23,7 +23,6 @@ limitations under the License.
                       xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
                       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <fileSets>
-
         <fileSet filtered="true" packaged="false" encoding="UTF-8">
             <directory>src/test/java</directory>
             <includes>
@@ -40,6 +39,13 @@ limitations under the License.
             <directory>src/main/java</directory>
             <includes>
                 <include>**/*.java</include>
+            </includes>
+        </fileSet>
+        <fileSet filtered="false" packaged="false" encoding="UTF-8">
+            <directory>src/test/resources</directory>
+            <includes>
+                <include>**/*.xml</include>
+                <include>**/*.properties</include>
             </includes>
         </fileSet>
         <fileSet filtered="true" packaged="false" encoding="UTF-8">
