@@ -7,7 +7,7 @@
     </parent>
     <groupId>com.airhacks</groupId>
     <artifactId>javaee-bce-archetype</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4-SNAPSHOT</version>
     <name>javaee-bce-archetype</name>
     <description>Maven Archetype (wizard) for the javaee-bce-pom project</description>
     <url>http://airhacks.com</url>
@@ -90,7 +90,7 @@
         <connection>scm:git:git@github.com:AdamBien/javaee-bce-archetype.git</connection>
         <url>scm:git:git@github.com:AdamBien/javaee-bce-archetype.git</url>
         <developerConnection>scm:git:git@github.com:AdamBien/javaee-bce-archetype.git</developerConnection>
-        <tag>v0.0.3</tag>
+        <tag>HEAD</tag>
     </scm>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
