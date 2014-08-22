@@ -4,6 +4,7 @@ import java.util.function.BiFunction;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -17,12 +18,16 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
+@NamedQuery(name = Registration.findAll, query = "SELECT r FROM Registration r")
 public class Registration {
 
     @Id
     @GeneratedValue
     @XmlTransient
     private long id;
+
+    private static final String PREFIX = "com.airhacks.workshops.business.registrations.entity.Registration.";
+    public static final String findAll = PREFIX + "all";
 
     @XmlTransient
     @Transient

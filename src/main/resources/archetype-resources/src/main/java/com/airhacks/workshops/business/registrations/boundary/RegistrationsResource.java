@@ -5,7 +5,7 @@ import com.airhacks.workshops.business.registrations.entity.Registration;
 import java.net.URI;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -31,19 +31,25 @@ public class RegistrationsResource {
 
     @POST
     public Response register(Registration request, @Context UriInfo info) {
-        Registration registration = registrations.register(request);
-        long id = registration.getId();
+        JsonObject registration = registrations.register(request);
+        long id = registration.getInt(Registrations.CONFIRMATION_ID);
         URI uri = info.getAbsolutePathBuilder().path("/" + id).build();
-        JsonObject confirmation = Json.createObjectBuilder().
-                add("price", registration.getTotalPrice()).
-                add("confirmation-id", registration.getId()).build();
-        return Response.created(uri).entity(confirmation).build();
+        return Response.created(uri).entity(registration).build();
     }
 
     @GET
     @Path("{id}")
     public Registration find(@PathParam("id") int registrationId) {
         return registrations.find(registrationId);
+    }
+
+    @GET
+    public Response all() {
+        JsonArray registrationList = this.registrations.allAsJson();
+        if (registrationList == null || registrationList.isEmpty()) {
+            return Response.noContent().build();
+        }
+        return Response.ok(registrationList).build();
     }
 
     @GET
