@@ -39,6 +39,7 @@ limitations under the License.
             <directory>workshops</directory>
             <includes>
                 <include>**/*.xml</include>
+                <include>**/*.jmx</include>
             </includes>
         </fileSet>
         <fileSet filtered="true" packaged="false" encoding="UTF-8">
