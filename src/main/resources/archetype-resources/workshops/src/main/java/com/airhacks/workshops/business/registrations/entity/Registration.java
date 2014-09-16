@@ -23,7 +23,6 @@ public class Registration {
 
     @Id
     @GeneratedValue
-    @XmlTransient
     private long id;
 
     private static final String PREFIX = "com.airhacks.workshops.business.registrations.entity.Registration.";
@@ -39,12 +38,14 @@ public class Registration {
 
     private final static int DAILY_PRICE = 300;
 
-    private int totalPrice;
-
     public Registration(boolean vatIdAvailable, int numberOfDays, int numberOfAttendees) {
         this.numberOfDays = numberOfDays;
         this.numberOfAttendees = numberOfAttendees;
         this.vatIdAvailable = vatIdAvailable;
+    }
+
+    public Registration(long id) {
+        this.id = id;
     }
 
     public Registration() {
