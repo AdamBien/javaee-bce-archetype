@@ -40,6 +40,7 @@ public class RegistrationsTest {
     void mockQuery(String name, List<Registration> results) {
         Query mockedQuery = mock(Query.class);
         when(mockedQuery.getResultList()).thenReturn(results);
+        when(mockedQuery.setParameter(Matchers.anyString(), Matchers.anyObject())).thenReturn(mockedQuery);
         when(this.cut.em.createNamedQuery(name)).thenReturn(mockedQuery);
     }
 
